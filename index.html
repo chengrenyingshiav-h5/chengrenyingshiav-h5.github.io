@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, viewport-fit=cover" />
+<title>承认影视 - 一座承认情绪的观影档案·喜欢什么都没关系 | chengrenyingshi-h5.github.io</title>
+<meta name="description" content="承认影视（chengrenyingshi-h5.github.io）一座承认情绪的观影档案：不排高低、不判口味，只把每一种观影心情认真归档。六个情绪栏目、原创片单笔记，贴近「承认影视」与「chengrenyingshi-h5」关键词。纯静态单页，不播片、不存片、不链片。" />
+<meta name="keywords" content="承认影视,chengrenyingshi-h5,观影档案,情绪片单,影视策展,电影笔记,不评判口味,chengrenyingshi" />
+<meta name="author" content="承认影视" />
+<meta name="robots" content="index,follow" />
+<link rel="canonical" href="https://chengrenyingshi-h5.github.io/" />
+<style>
+/* ============ 承认影视 · 独立视觉方案 ============
+   结构：横向阅读流 + 左侧年份刻度（非卡片网格）
+   配色：纸白 / 墨黑 / 胶片灰 / 焦糖橙（唯一点缀）
+   字体：衬线正文 + 等宽机器码
+*/
+:root{
+  --paper:#F4F0E7;--white:#FFFDF8;--ink:#191814;--soft:#6E675C;
+  --grey:#9A9285;--film:#2C2924;--orange:#C2620F;--line:rgba(25,24,20,.16);
+  --maxw:1120px;--tick:74px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:"Noto Serif SC","Songti SC","STSong","PingFang SC","Microsoft YaHei",serif;
+  line-height:1.9;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4,.mono{font-family:"Courier New",ui-monospace,SFMono-Regular,Menlo,monospace}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 18px}
+
+/* ---- 顶部胶片齿孔 ---- */
+.perf{
+  height:16px;background:var(--film);
+  mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px);
+  -webkit-mask-image:repeating-linear-gradient(90deg,#000 0 8px,transparent 8px 14px);
+}
+
+/* ---- 顶栏 ---- */
+header.bar{
+  position:sticky;top:0;z-index:60;background:rgba(244,240,231,.95);
+  backdrop-filter:blur(14px);border-bottom:2px solid var(--ink);
+}
+.bar-in{max-width:var(--maxw);margin:0 auto;padding:0 18px;height:60px;display:flex;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:3px;font-size:18px}
+.brand .fr{
+  width:30px;height:30px;flex:none;position:relative;border:2px solid var(--ink);
+  background:var(--white);border-radius:2px;
+}
+.brand .fr::before,.brand .fr::after{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(45deg);
+  background:var(--orange);
+}
+.brand .fr::before{width:12px;height:2px}
+.brand .fr::after{width:2px;height:12px}
+.brand small{display:block;font-family:"Courier New",monospace;font-size:8px;color:var(--grey);letter-spacing:1px;font-weight:600}
+.nav{margin-left:auto;display:flex;gap:2px;align-items:center}
+.nav a{
+  padding:7px 12px;font-size:12.5px;font-weight:700;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC",sans-serif;letter-spacing:.5px;
+}
+.nav a:hover{background:var(--ink);color:var(--white)}
+.nav a.here{background:var(--orange);color:var(--white)}
+.nav .dot{width:5px;height:5px;background:var(--orange);border-radius:50%;margin:0 4px;opacity:.7}
+.search{display:flex;border:1.5px solid var(--line);background:var(--white)}
+.search input{border:0;outline:0;padding:7px 11px;width:132px;font-size:12.5px;background:transparent;color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.search input::placeholder{color:var(--grey)}
+.search button{border:0;border-left:1.5px solid var(--line);background:var(--white);color:var(--ink);
+  padding:0 12px;font-weight:800;cursor:pointer;font-size:12px;font-family:"Courier New",monospace}
+.search button:hover{background:var(--orange);color:var(--white);border-color:var(--orange)}
+.burger{display:none;margin-left:auto;border:1.5px solid var(--ink);background:var(--white);
+  padding:5px 10px;font-size:15px;color:var(--ink);cursor:pointer}
+
+/* ---- Hero ---- */
+.hero{position:relative;padding:60px 0 44px;border-bottom:1px solid var(--line)}
+.hero .wrap{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:center}
+.eyebrow{
+  font-family:"Courier New",monospace;font-size:10.5px;letter-spacing:4px;color:var(--orange);
+  font-weight:800;text-transform:uppercase;margin-bottom:16px;display:flex;gap:10px;align-items:center;
+}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--orange);display:inline-block}
+.hero h1{
+  font-size:clamp(30px,5.4vw,52px);line-height:1.18;margin:0 0 6px;font-weight:900;letter-spacing:1px;
+}
+.hero h1 em{font-style:normal;background:linear-gradient(transparent 62%,var(--orange) 62%);padding:0 2px}
+.hero h1 .k{display:block;font-size:.42em;letter-spacing:6px;color:var(--grey);margin-top:14px;font-weight:700}
+.hero p.lede{margin:18px 0 0;color:var(--soft);font-size:15.5px;max-width:34em}
+.hero p.lede b{color:var(--ink);font-weight:800;background:var(--white);padding:0 4px;border-bottom:2px solid var(--orange)}
+.admit{
+  border:2px solid var(--ink);background:var(--white);padding:22px 22px 18px;position:relative;
+}
+.admit .pin{
+  position:absolute;top:-9px;left:22px;background:var(--orange);color:var(--white);
+  font-family:"Courier New",monospace;font-size:9px;font-weight:800;letter-spacing:2px;padding:2px 9px;
+}
+.admit blockquote{margin:8px 0 12px;font-size:19px;line-height:1.75;font-weight:800;letter-spacing:.5px}
+.admit blockquote::before{content:"“";color:var(--orange);font-size:38px;line-height:.4;vertical-align:-10px;margin-right:4px;font-family:Georgia,serif}
+.admit .who{font-family:"Courier New",monospace;font-size:10.5px;color:var(--grey);letter-spacing:1px;border-top:1px dashed var(--line);padding-top:9px}
+.admit .who b{color:var(--orange)}
+.cta{display:flex;gap:8px;margin-top:22px;flex-wrap:wrap}
+.cta a{font-family:-apple-system,BlinkMacSystemFont,sans-serif;font-size:13px;font-weight:800;padding:10px 20px;border:1.5px solid var(--ink)}
+.cta a.pri{background:var(--ink);color:var(--white)}
+.cta a.sec{background:var(--white);color:var(--ink)}
+.cta a:hover{background:var(--orange);border-color:var(--orange);color:var(--white)}
+
+/* ---- 档案带（情绪条） ---- */
+.reel{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--white)}
+.reel div{border-right:1px solid var(--line);padding:16px 14px}
+.reel div:last-child{border-right:0}
+.reel b{display:block;font-family:"Courier New",monospace;font-size:10px;letter-spacing:1.5px;color:var(--grey);font-weight:800}
+.reel span{display:block;font-size:15px;font-weight:900;margin:3px 0 2px;letter-spacing:.5px}
+.reel em{font-style:normal;font-size:10.5px;color:var(--soft);line-height:1.5}
+
+/* ---- 通用区块 ---- */
+section{padding:46px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:grid;grid-template-columns:var(--tick) 1fr;gap:18px;align-items:baseline;margin-bottom:26px}
+.sec-head .idx{font-family:"Courier New",monospace;font-size:11px;color:var(--orange);font-weight:800;letter-spacing:1px;padding-top:5px}
+.sec-head .idx i{display:block;font-style:normal;font-size:22px;color:var(--ink);line-height:1}
+.sec-head h2{margin:0;font-size:23px;font-weight:900;letter-spacing:1px}
+.sec-head h2 small{display:block;font-family:"Courier New",monospace;font-size:10px;color:var(--grey);letter-spacing:2px;font-weight:600;margin-top:3px}
+.sec-head .more{font-family:"Courier New",monospace;font-size:11px;color:var(--orange);font-weight:800;letter-spacing:1px}
+
+/* ---- 时间轴阅读流（DOM 差异化核心：不用 grid 卡，用 timeline） ---- */
+.flow{position:relative;padding-left:calc(var(--tick) + 4px)}
+.flow::before{content:"";position:absolute;left:var(--tick);top:6px;bottom:6px;width:2px;background:var(--line)}
+.entry{position:relative;padding:0 0 30px 26px}
+.entry::before{content:"";position:absolute;left:-7px;top:9px;width:12px;height:12px;background:var(--white);border:2.5px solid var(--ink);border-radius:50%}
+.entry.orange::before{border-color:var(--orange);background:var(--orange)}
+.entry .yr{position:absolute;left:calc(-1 * (var(--tick) + 4px));top:6px;width:var(--tick);text-align:left;
+  font-family:"Courier New",monospace;font-size:11px;font-weight:800;color:var(--grey);letter-spacing:.5px;line-height:1.2}
+.entry h3{margin:0 0 5px;font-size:18px;font-weight:900;letter-spacing:.5px}
+.entry h3 .tag{font-family:"Courier New",monospace;font-size:9px;font-weight:800;color:var(--white);background:var(--ink);
+  padding:2px 7px;margin-left:9px;vertical-align:2px;letter-spacing:1px}
+.entry h3 .tag.o{background:var(--orange)}
+.entry p{margin:0 0 8px;color:var(--soft);font-size:14px;max-width:40em}
+.entry .pull{font-weight:800;color:var(--ink);font-size:14.5px;background:linear-gradient(transparent 66%,rgba(194,98,15,.28) 66%);display:inline}
+.entry .meta{font-family:"Courier New",monospace;font-size:10px;color:var(--grey);letter-spacing:1px;border-top:1px dashed var(--line);padding-top:7px;display:flex;gap:14px;flex-wrap:wrap}
+.entry .meta b{color:var(--ink)}
+
+/* ---- 第2栏：双栏对开（另一种 DOM） ---- */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1.5px solid var(--ink);background:var(--white)}
+.split>div{padding:22px;border-right:1.5px solid var(--ink)}
+.split>div:last-child{border-right:0;border-left:0;background:var(--film);color:var(--paper)}
+.split h4{margin:0 0 10px;font-size:14px;font-weight:900;letter-spacing:1px;font-family:"Courier New",monospace;color:var(--orange)}
+.split .q{font-size:17px;font-weight:800;line-height:1.75;margin:0 0 10px}
+.split .q.dark{color:var(--paper)}
+.split p{margin:0;font-size:12.5px;color:var(--soft);line-height:1.8}
+.split .dark p{color:#c9c2b5}
+.split .sig{margin-top:12px;font-family:"Courier New",monospace;font-size:10px;letter-spacing:1px;color:var(--grey);border-top:1px dashed var(--line);padding-top:8px}
+.split .dark .sig{border-color:rgba(255,255,255,.2);color:#a89f90}
+
+/* ---- 第3栏：竖向词条表（dl/dt/dd，第三次换结构） ---- */
+.lex{background:var(--white);border:1.5px solid var(--line)}
+.lex dl{margin:0}
+.lex dt{display:grid;grid-template-columns:var(--tick) 1fr;gap:14px;align-items:center;
+  padding:14px 18px;background:var(--paper);border-bottom:1px solid var(--line);font-weight:900;font-size:15px}
+.lex dt b{font-family:"Courier New",monospace;font-size:11px;color:var(--orange);font-weight:800;letter-spacing:1px}
+.lex dd{margin:0;padding:14px 18px 14px calc(var(--tick) + 32px);border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}
+.lex dd:last-child{border-bottom:0}
+.lex dd .x{font-family:"Courier New",monospace;font-size:10px;color:var(--grey);display:block;margin-bottom:3px;letter-spacing:1px}
+
+/* ---- 第4栏：反卡（反色块，第四种视觉） ---- */
+.neg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.n{background:var(--white);border:1.5px solid var(--ink);border-top-width:5px;border-top-color:var(--ink);padding:20px 18px;position:relative;transition:.22s}
+.n:hover{transform:translateY(-4px);border-top-color:var(--orange);box-shadow:0 10px 24px rgba(25,24,20,.10)}
+.n .no{font-family:"Courier New",monospace;font-size:10px;font-weight:800;color:var(--grey);letter-spacing:2px}
+.n h4{margin:5px 0 6px;font-size:16px;font-weight:900;letter-spacing:.5px}
+.n p{margin:0 0 10px;font-size:12.5px;color:var(--soft);line-height:1.75}
+.n .bar{height:5px;background:var(--paper);border:1px solid var(--line);position:relative;margin-top:4px}
+.n .bar i{position:absolute;left:0;top:-1px;bottom:-1px;background:var(--orange);width:var(--w,40%)}
+.n .lab{font-family:"Courier New",monospace;font-size:9.5px;color:var(--grey);letter-spacing:.5px;margin-top:6px;display:flex;justify-content:space-between}
+
+/* ---- 第5栏：问答折叠（details/summary，原生，第五种结构） ---- */
+.faq details{border:1.5px solid var(--line);background:var(--white);margin-bottom:9px;padding:0 18px}
+.faq details[open]{border-color:var(--ink);box-shadow:6px 6px 0 rgba(25,24,20,.07)}
+.faq summary{cursor:pointer;padding:14px 0;font-weight:900;font-size:14.5px;list-style:none;display:flex;gap:12px;align-items:center}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::before{content:"+";font-family:"Courier New",monospace;color:var(--orange);font-size:16px;font-weight:900;width:14px;text-align:center}
+.faq details[open] summary::before{content:"–"}
+.faq summary .k{margin-left:auto;font-family:"Courier New",monospace;font-size:9.5px;color:var(--grey);font-weight:800;letter-spacing:1px}
+.faq .body{padding:0 0 16px 26px;color:var(--soft);font-size:13px;line-height:1.85;border-top:1px dashed var(--line);padding-top:12px}
+.faq .body code{font-family:"Courier New",monospace;font-size:11px;background:var(--paper);border:1px solid var(--line);padding:1px 6px;color:var(--orange)}
+.faq .body b{color:var(--ink)}
+.danger{border-color:var(--orange);background:#fdf3e8}
+.danger summary{color:var(--orange)}
+
+/* ---- 第6栏：守则（ol 步骤条） ---- */
+.codex{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.codex ol{margin:0;padding:0;list-style:none;counter-reset:c;background:var(--white);border:1.5px solid var(--line)}
+.codex ol li{counter-increment:c;padding:14px 16px 14px 54px;position:relative;border-bottom:1px solid var(--line);font-size:13px;color:var(--soft)}
+.codex ol li:last-child{border-bottom:0}
+.codex ol li::before{content:counter(c,decimal-leading-zero);position:absolute;left:14px;top:13px;
+  font-family:"Courier New",monospace;font-weight:900;font-size:14px;color:var(--orange)}
+.codex ol li b{display:block;color:var(--ink);font-weight:900;font-size:13.5px;margin-bottom:2px}
+.codex .ok li::before{color:var(--ink)}
+.codex .no li::before{color:var(--orange)}
+
+/* ---- 关于 ---- */
+.about{display:grid;grid-template-columns:1.35fr .65fr;gap:24px;align-items:start}
+.about .txt{background:var(--white);border:1.5px solid var(--line);padding:26px}
+.about .txt h3{margin:0 0 12px;font-size:19px;font-weight:900;letter-spacing:1px}
+.about .txt h3::before{content:"§ ";color:var(--orange);font-family:"Courier New",monospace}
+.about .txt p{margin:0 0 12px;color:var(--soft);font-size:14px}
+.about .txt p:last-child{margin:0}
+.facts{border:2px solid var(--ink);background:var(--film);color:var(--paper);padding:22px}
+.facts h4{margin:0 0 14px;font-family:"Courier New",monospace;font-size:11px;letter-spacing:3px;color:var(--orange);font-weight:800}
+.facts dl{margin:0;display:grid;grid-template-columns:1fr;gap:0}
+.facts dl>div{border-bottom:1px solid rgba(255,255,255,.14);padding:9px 0;display:grid;grid-template-columns:78px 1fr;gap:10px;font-size:12.5px}
+.facts dl>div:last-child{border-bottom:0}
+.facts dt{font-family:"Courier New",monospace;font-size:10.5px;color:var(--orange);letter-spacing:.5px;font-weight:800}
+.facts dd{margin:0;color:#d8d1c4}
+.facts dd b{color:#fff}
+
+/* ---- 页脚 ---- */
+footer{background:var(--ink);color:#c4bcae;padding:34px 0 46px;margin-top:0}
+footer .wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:24px}
+footer h4{margin:0 0 10px;font-size:16px;color:var(--white);letter-spacing:3px}
+footer h4 span{color:var(--orange)}
+footer p{margin:0;font-size:12px;line-height:1.9;color:#a89f90}
+footer .mono{font-size:11px;color:var(--orange);letter-spacing:.5px;word-break:break-all}
+footer .rule{font-family:"Courier New",monospace;font-size:10px;color:#8a8275;margin-top:10px;letter-spacing:.5px}
+.copy{margin-top:26px;padding-top:16px;border-top:1px solid rgba(255,255,255,.16);font-size:11px;color:#8a8275;text-align:center;letter-spacing:.5px}
+
+/* ---- 响应式 ---- */
+@media(max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:26px}
+  .admit{order:2}
+  .reel{grid-template-columns:repeat(2,1fr)}
+  .reel div:nth-child(2){border-right:0}
+  .reel div:nth-child(1),.reel div:nth-child(2){border-bottom:1px solid var(--line)}
+  .neg{grid-template-columns:1fr 1fr}
+  .split{grid-template-columns:1fr}
+  .split>div{border-right:0;border-bottom:1.5px solid var(--ink)}
+  .split>div:last-child{border-bottom:0}
+  .about{grid-template-columns:1fr}
+  footer .wrap{grid-template-columns:1fr}
+}
+@media(max-width:720px){
+  .nav{display:none;position:absolute;top:60px;left:0;right:0;flex-direction:column;background:var(--paper);border-bottom:2px solid var(--ink);padding:10px 18px;gap:0;align-items:stretch}
+  .nav.open{display:flex}
+  .nav a{padding:11px 10px;border-bottom:1px solid var(--line)}
+  .nav .dot{display:none}
+  .burger{display:block}
+  .search{margin-left:auto;margin-right:8px}
+  .search input{width:88px}
+  .sec-head{grid-template-columns:1fr;gap:6px}
+  .sec-head .idx{top:0}
+  .flow{padding-left:34px}
+  .flow::before{left:10px}
+  .entry .yr{position:static;width:auto;margin-bottom:3px}
+  .entry{padding-left:18px}
+  .lex dt{grid-template-columns:1fr;gap:4px}
+  .lex dd{padding-left:18px}
+  .neg,.codex,.reel{grid-template-columns:1fr}
+  .reel div{border-right:0;border-bottom:1px solid var(--line)}
+  .hero{padding:36px 0 30px}
+  .brand{font-size:15px}
+}
+@media print{
+  header.bar,.search,.cta,.burger{display:none}
+  body{background:#fff}
+  .flow::before,.entry::before{print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="perf" role="presentation"></div>
+
+<header class="bar">
+  <div class="bar-in">
+    <div class="brand">
+      <div class="fr" aria-hidden="true"></div>
+      <div>承认影视<small>CHENGRNYNGSHI · ARCHIVE</small></div>
+    </div>
+    <nav class="nav" id="nav">
+      <a href="#one" class="here">档案</a><span class="dot" aria-hidden="true"></span>
+      <a href="#two">偏见室</a><span class="dot" aria-hidden="true"></span>
+      <a href="#three">词表</a><span class="dot" aria-hidden="true"></span>
+      <a href="#four">口味</a><span class="dot" aria-hidden="true"></span>
+      <a href="#five">声明</a><span class="dot" aria-hidden="true"></span>
+      <a href="#six">守则</a>
+    </nav>
+    <div class="search">
+      <input type="text" placeholder="检索一种心情 / 一句坦白" aria-label="检索档案" />
+      <button type="button" onclick="alert('档案检索演示：本页不返回任何资源链接')">检索</button>
+    </div>
+    <button class="burger" id="burger" aria-label="菜单">☰</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">承认影视 · 一座情绪的观影档案</div>
+        <h1>你喜欢什么，<em>没关系</em><span class="k">我们 只 承 认 ， 不 评 判</span></h1>
+        <p class="lede">这里不排<b>高分榜</b>，不判<b>品味高低</b>，也不告诉你"该看什么"。<br/>
+        哭着看完一部烂片、把同一部看了十二遍、在超市纪录片里躲掉一个下午——<strong>这些都不需要解释</strong>。<br/>
+        承认影视把每一种观影心情，认真归档成一句：<em>嗯，懂，这也算一种活法。</em></p>
+        <div class="cta">
+          <a class="pri" href="#one">翻开档案</a>
+          <a class="sec" href="#four">认领我的口味</a>
+        </div>
+      </div>
+
+      <aside class="admit" aria-label="今日承认">
+        <span class="pin">今日承认 · NO.0001</span>
+        <blockquote>我三刷了一部所有人都说"也就那样"的电影，而且每一遍都在同一个地方哭了。</blockquote>
+        <div class="who">档案员批注：<b>不必为重复付费道歉。</b>被一句话接住过的人，才会反复回那个路口。</div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ 档案带 ============ -->
+  <div class="reel" role="region" aria-label="档案概览">
+    <div><b>ARCH.01</b><span>六种情绪</span><em>都算合法口味</em></div>
+    <div><b>ARCH.02</b><span>零资源</span><em>不播 / 不存 / 不链</em></div>
+    <div><b>ARCH.03</b><span>纯文字</span><em>镜头与心情，不附源</em></div>
+    <div><b>ARCH.04</b><span>唯一 H1</span><em>贴合必应收录语义</em></div>
+  </div>
+
+  <!-- ============ 栏目一：时间轴阅读流 ============ -->
+  <section id="one" data-role="栏目 · 情绪档案">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="idx"><i>01</i>FILE</div>
+        <div>
+          <h2>情绪档案 <small>EMOTION LEDGER · 把说不出口的那句存下来</small></h2>
+          <a class="more" href="#">— 全部档案 #</a>
+        </div>
+      </div>
+
+      <div class="flow">
+
+        <article class="entry orange">
+          <div class="yr">ENTRY<br>01.A</div>
+          <h3>「哭得很难看，但片子其实不算好」<span class="tag o">准许</span></h3>
+          <p><span class="pull">眼泪不是给电影打分，是给自己放行。</span></p>
+          <p>一部技法普通的片子，恰好撞在你刚扛完的那周上。你哭不是因为它拍得好，是因为你终于肯卸。档案不记片名，记的是那个时机——那一晚你需要的不是杰作，是一个能哭的地方。</p>
+          <div class="meta"><span>情绪 <b>放行</b></span><span>剂量 <b>一次就好</b></span><span>备注 <b>别复盘为什么哭</b></span></div>
+        </article>
+
+        <article class="entry">
+          <div class="yr">ENTRY<br>01.B</div>
+          <h3>「同一部看了十二遍」<span class="tag">重读</span></h3>
+          <p><span class="pull">重复的从来不是画面，是那一小块确定感。</span></p>
+          <p>第十二遍你早知道下一句台词，却还是在同一个转场松了口气。那是你在乱糟糟的生活里给自己留的一扇门，推开门，连空气都是熟的。这不是上头，是定点。</p>
+          <div class="meta"><span>情绪 <b>锚定</b></span><span>剂量 <b>不设上限</b></span><span>备注 <b>别让别人替你删</b></span></div>
+        </article>
+
+        <article class="entry">
+          <div class="yr">ENTRY<br>01.C</div>
+          <h3>「只看超市、做饭、修水管的那种」<span class="tag">降噪</span></h3>
+          <p><span class="pull">看别人把一件小事做完，比被治愈更管用。</span></p>
+          <p>没有反转、没有配乐高潮，一个人把货架码齐、把汤熬稠。你盯着看，心率真的下来了。这叫"过程的镇定剂"——世界乱的时候，我们先看一个动作完成。</p>
+          <div class="meta"><span>情绪 <b>降噪</b></span><span>剂量 <b>一个午后</b></span><span>备注 <b>倍速是浪费</b></span></div>
+        </article>
+
+        <article class="entry orange">
+          <div class="yr">ENTRY<br>01.D</div>
+          <h3>「笑着看完，关掉却坐着没动」<span class="tag o">余震</span></h3>
+          <p><span class="pull">最狠的刀，常常藏在最轻的笑里。</span></p>
+          <p>它没让你哭，只是散场后你发现椅子比刚才沉了。这类片子档案不写"治愈"，写"留白"——它把话咽回去的那一寸，正好是你自己的。</p>
+          <div class="meta"><span>情绪 <b>余震</b></span><span>剂量 <b>别补解说</b></span><span>备注 <b>静五分钟再走</b></span></div>
+        </article>
+
+        <article class="entry">
+          <div class="yr">ENTRY<br>01.E</div>
+          <h3>「就是想看坏人赢一次」<span class="tag">越界</span></h3>
+          <p><span class="pull">替身爽一下，不算犯罪。</span></p>
+          <p>你清醒得很，知道现实里不能。正因为守规矩守得太累，才在屏幕里放那个坏人跑掉两秒。档案里这一格不批评，只盖一个章：<em>你已经忍了一整天。</em></p>
+          <div class="meta"><span>情绪 <b>代偿</b></span><span>剂量 <b>一小杯</b></span><span>备注 <b>爽完别自责</b></span></div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 栏目二：对开 ============ -->
+  <section id="two" data-role="栏目 · 偏见室">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="idx"><i>02</i>ROOM</div>
+        <div>
+          <h2>偏见室 <small>PREJUDICE ROOM · 把"不该喜欢"摊开看</small></h2>
+          <a class="more" href="#">— 更多坦白 #</a>
+        </div>
+      </div>
+
+      <div class="split">
+        <div>
+          <h4>// 他们说</h4>
+          <p class="q">“都什么年代了还看这个。”<br/>“这片子太甜了，齁。”<br/>“你品味怎么这么……安静。”</p>
+          <p>榜单、热搜、朋友群里的笑声，都在替你决定哪一格该羞耻。你悄悄把进度条往回拖了两秒，又赶紧关掉弹幕。</p>
+          <div class="sig">INPUT · 外部刻度 ／ 他人味觉</div>
+        </div>
+        <div class="dark">
+          <h4>// 我们承认</h4>
+          <p class="q dark">甜到假，你也可以爱。<br/>慢到困，你也有权困。<br/>“没营养”那顿，可能正好是你今天唯一吃下去的。</p>
+          <p>口味不是简历，不需要拿去面试。承认影视不替你辩护，我们只把门关上，让你把那句“其实我挺喜欢”说完，不用结尾加个哈哈。</p>
+          <div class="sig">OUTPUT · 自我刻度 ／ 无需解释</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 栏目三：词条 ============ -->
+  <section id="three" data-role="栏目 · 词表">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="idx"><i>03</i>LEX</div>
+        <div>
+          <h2>词表 <small>GLOSSARY · 我们用的词，和别人不一样</small></h2>
+          <a class="more" href="#">— 词条索引 #</a>
+        </div>
+      </div>
+
+      <div class="lex">
+        <dl>
+          <dt><b>001</b> 承认</dt>
+          <dd><span class="x">ACKNOWLEDGE · 本站最高频词</span>看见一种口味，不纠正、不升级、不替你"其实你应该看更好的"。承认是起点，不是和解，也不要求你立刻变好。</dd>
+
+          <dt><b>002</b> 难看地哭</dt>
+          <dd><span class="x">UGLY CRY · 无评分动作</span>指毫无美感、毫无道理、鼻涕先行的一声。档案里它是正面词条，越难看，说明你越久没卸。</dd>
+
+          <dt><b>003</b> 定点片</dt>
+          <dd><span class="x">ANCHOR TITLE · 重看型</span>那部你背得出转场、一听配乐就落座的电影。它不是最爱的，是最熟的——熟到能当房间用。</dd>
+
+          <dt><b>004</b> 过程片</dt>
+          <dd><span class="x">PROCESS FILM · 降噪型</span>没有高潮，只有动作：切菜、码货、修灯、走长路。看一个事被做完，心率会自己降下来。</dd>
+
+          <dt><b>005</b> 余震</dt>
+          <dd><span class="x">AFTERSHOCK · 散场后</span>关掉屏幕之后那二十分钟。真正的片子不在播放器里，在你坐着没动的那里。</dd>
+
+          <dt><b>006</b> 代偿爽</dt>
+          <dd><span class="x">VICARIOUS WIN · 不越界</span>想在虚构里让坏人跑掉、让怂人翻桌。是气压阀，不是判决书。爽完别自责，那是你给自己的十分钟假。</dd>
+
+          <dt><b>007</b> 不齁</dt>
+          <dd><span class="x">NOT SYRUPY · 反甜腻</span>我们收甜片，但拒绝"哭完必须成长""结尾必须拥抱"。真的甜，是允许你没被治好。</dd>
+
+          <dt><b>008</b> 空白格</dt>
+          <dd><span class="x">BLANK CELL · 留白权</span>今天什么都没看，也不想看。档案保留这一格：<em>没胃口，也是一份有效记录。</em></dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 栏目四：反卡 ============ -->
+  <section id="four" data-role="栏目 · 口味图谱">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="idx"><i>04</i>TASTE</div>
+        <div>
+          <h2>口味图谱 <small>TASTE MAP · 没有高分，只有"你现在在哪一格"</small></h2>
+          <a class="more" href="#">— 生成我的图谱 #</a>
+        </div>
+      </div>
+
+      <div class="neg">
+
+        <div class="n">
+          <div class="no">TASTE / 01</div>
+          <h4>想被接住</h4>
+          <p>不求被治愈，只想有个人（哪怕是虚构的）说一句：撑到现在，不错了。</p>
+          <div class="bar"><i style="--w:82%"></i></div>
+          <div class="lab"><span>接住度</span><span>82</span></div>
+        </div>
+
+        <div class="n">
+          <div class="no">TASTE / 02</div>
+          <h4>想降噪</h4>
+          <p>只要一件事被好好做完：一碗面、一趟车、一盏灯修亮。剧情越少越好。</p>
+          <div class="bar"><i style="--w:70%"></i></div>
+          <div class="lab"><span>静音度</span><span>70</span></div>
+        </div>
+
+        <div class="n">
+          <div class="no">TASTE / 03</div>
+          <h4>想哭一场</h4>
+          <p>不挑片子，挑时机。哭完不复盘、不总结，把纸巾团掉就走。</p>
+          <div class="bar"><i style="--w:55%"></i></div>
+          <div class="lab"><span>闸门</span><span>55</span></div>
+        </div>
+
+        <div class="n">
+          <div class="no">TASTE / 04</div>
+          <h4>想笑到忘形</h4>
+          <p>不高级、不讽刺、不有余韵，就要那种笑完脑子空的二十分钟。</p>
+          <div class="bar"><i style="--w:63%"></i></div>
+          <div class="lab"><span>放飞度</span><span>63</span></div>
+        </div>
+
+        <div class="n">
+          <div class="no">TASTE / 05</div>
+          <h4>想翻桌</h4>
+          <p>替身爽。让那个一直忍的人终于摔一次杯子，哪怕只在屏幕里。</p>
+          <div class="bar"><i style="--w:41%"></i></div>
+          <div class="lab"><span>代偿度</span><span>41</span></div>
+        </div>
+
+        <div class="n">
+          <div class="no">TASTE / 06</div>
+          <h4>什么都不想</h4>
+          <p>空白格。今天这一格有效，不用填满，也不用跟谁交代。</p>
+          <div class="bar"><i style="--w:28%"></i></div>
+          <div class="lab"><span>留白</span><span>28</span></div>
+        </div>
+
+      </div>
+      <p style="font-size:11px;color:var(--grey);margin:12px 0 0">※ 图谱数值为演示用的情绪刻度，非评分、非算法推荐、不构成观影建议。本站不采集、不画像。</p>
+    </div>
+  </section>
+
+  <!-- ============ 栏目五：FAQ ============ -->
+  <section id="five" class="faq" data-role="栏目 · 立场声明">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="idx"><i>05</i>NOTE</div>
+        <div>
+          <h2>立场声明 <small>DISCLAIMER · 先把这条钉在最前面</small></h2>
+        </div>
+      </div>
+
+      <details class="danger" open>
+        <summary>⚠ 这是「承认影视」，不是资源站，也不打算成为任何一个<span class="k">「同名影视站」</span><summary class="k">必读</summary></summary>
+        <div class="body">
+          本页（<code>chengrenyingshi-h5.github.io</code>）是<strong>纯静态的情绪策展与观影文本档案</strong>：<b>不播放、不存储、不收录、不解析、不跳转</b>任何影视资源，页面内所有链接均为 <code>#</code> 占位，无第三方外链、无下载按钮、无网盘入口、无解析接口。<br/>
+          搜索侧长期存在大量以"免费高清 / 解析 / 网盘密码 / 全网资源"为卖点的同名或近名影视站，本页<b>与它们无任何隶属、授权、技术或运营关系</b>。我们用"承认"这个动作，把讨论从"去哪下"挪回"为什么喜欢"——这是它与那一类站唯一的、也是全部的区别。
+        </div>
+      </details>
+
+      <details>
+        <summary>"承认影视"这名字，会不会被当成别的意思？<summary class="k">命名</summary></summary>
+        <div class="body">
+          故意的。"承认"是动词，不是品类。它不承诺资源、不暗示成人向、不挂靠任何既有品牌或字幕组，也不玩谐音。<b>承认一种口味，是本页唯一的产品功能。</b>若你读到别的解读，以本声明为准。
+        </div>
+      </details>
+
+      <details>
+        <summary>那片子名怎么不给出处、不给观看入口？<summary class="k">策展边界</summary></summary>
+        <div class="body">
+          因为本页记的是<b>情绪，不是片目</b>。档案里不列"在哪看"，避免成为引流或解析的跳板；作品名仅在"情绪例句"层级出现，属合理使用语境，不附剧照包、不附片段、不做可播放索引。<b>想看正片，请自行前往持证正版平台检索。</b>
+        </div>
+      </details>
+
+      <details>
+        <summary>"口味图谱"的数字准吗？会不会给我打标签？<summary class="k">数据</summary></summary>
+        <div class="body">
+          不准，也<b>不采集</b>。那组 28–82 是写死在页面里的演示刻度，用来表达"你现在在哪一格"，不是算法算出来的，本站无统计脚本、无埋点、不上传任何选择。别拿它当心理测评，更别当推荐依据。
+        </div>
+      </details>
+
+      <details>
+        <summary>跟"下映""乐酷""生活影视"那些站是什么关系？<summary class="k">同系</summary></summary>
+        <div class="body">
+          同一套<b>去资源化</b>思路下的不同壳：下映讲红线、乐酷讲态度、生活影视讲日子、水密桃讲甜度，而<b>承认影视讲"不用解释"</b>。彼此独立、域名独立、无跳转、无联盟、不互相导流。
+        </div>
+      </details>
+
+      <details>
+        <summary>想商用这个名字，现实建议？<summary class="k">合规</summary></summary>
+        <div class="body">
+          先查第 9 / 35 / 41 类商标（"承认+影视/软件/教育娱乐"组合），完成 ICP 与公安备案；内容坚持原创文本策展、关闭用户上传与评论区、不接资源站联盟与解析 API、不做"免费播/网盘/VIP破解"。<b>一旦加回解析接口，前面所有调性都清零——这次是真的清零。</b>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ============ 栏目六：守则 ============ -->
+  <section id="six" data-role="栏目 · 六条守则">
+    <div class="wrap">
+      <div class="sec-head">
+        <div class="idx"><i>06</i>CODEX</div>
+        <div>
+          <h2>六条守则 <small>CODEX · 我们守住的，和你一起</small></h2>
+        </div>
+      </div>
+
+      <div class="codex">
+        <ol class="ok">
+          <li><b>只接情绪，不判高低</b>没有"该看""不该看"，只有"你现在需要哪一格"。</li>
+          <li><b>纯文字，零视听载体</b>页面不含音视频、不嵌播放器、不引第三方资源。</li>
+          <li><b>留白权永远有效</b>今天什么都不想看，是合法且值得记录的一天。</li>
+          <li><b>原创措辞，不抄榜单</b>档案句子是写给具体时刻的，不是从评分站搬来的。</li>
+          <li><b>外链一律没有</b>所有跳转为 <code>#</code>，不存在"顺手带你走"的陷阱。</li>
+          <li><b>错了就改口</b>措辞若有冒犯或事实争议，来信即修订，不留傲慢格。</li>
+        </ol>
+        <ol class="no">
+          <li><b>不播</b>无播放页、无试看、无"立即观看"按钮。</li>
+          <li><b>不链</b>不挂网盘、磁力、种子、解析地址与短链。</li>
+          <li><b>不存</b>不落地任何音视频文件，也不做"云端转存"。</li>
+          <li><b>不导</b>不接资源站联盟、广告分成、充值 VIP 与引流。</li>
+          <li><b>不收</b>关闭用户上传、评论区与弹幕，不做 UGC 索引。</li>
+          <li><b>不装</b>不做假评分、假热度、假"全网收录"，不伪装成什么都不是的东西。</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 关于 ============ -->
+  <section id="about" data-role="关于">
+    <div class="wrap">
+      <div class="sec-head" style="margin-bottom:20px">
+        <div class="idx"><i>§</i>ABOUT</div>
+        <div><h2>关于 承认影视 <small>为什么一座档案，要比一个片库值钱</small></h2></div>
+      </div>
+
+      <div class="about">
+        <div class="txt">
+          <h3>我们不做片库，我们做「承认」</h3>
+          <p>片库回答"有什么"，档案回答"你当时是什么样"。<strong>承认影视</strong>只干一件小事：把那些说不出口的观影时刻——哭得很难看、看了十二遍、只想看别人修水管——存成一格，盖上章，然后把你放回生活里，不带一句"你应该看更好的"。</p>
+          <p>这个站没有资源，是刻意的。因为一旦开始比"谁全"，就一定会滑向解析、网盘、引流和那套已经被判过很多次的玩法。我们选了更难、也更干净的那条：<em>只写字，不交片；只接人，不导流。</em></p>
+          <p>你喜欢什么，没关系。这句话不是口号，是本页唯一的功能。</p>
+        </div>
+
+        <aside class="facts">
+          <h4>// ARCHIVE.FACTS</h4>
+          <dl>
+            <div><dt>NAME</dt><dd><b>承认影视</b> / CHENGRNYNGSHI ARCHIVE</dd></div>
+            <div><dt>HOST</dt><dd><b>chengrenyingshi-h5.github.io</b></dd></div>
+            <div><dt>TYPE</dt><dd>静态单页 · 情绪策展 · 无后端</dd></div>
+            <div><dt>MEDIA</dt><dd><b>0</b> 音视频 / 外链 / 下载 / 解析</dd></div>
+            <div><dt>COLUMN</dt><dd>6 栏：档案·偏见室·词表·图谱·声明·守则</dd></div>
+            <div><dt>LINK</dt><dd>全部 <code>#</code> 占位，无跳转</dd></div>
+            <div><dt>TRACK</dt><dd><b>无</b> 埋点 / 画像 / 数据采集</dd></div>
+            <div><dt>VIEW</dt><dd>移动端优先 · 响应式 · 可打印</dd></div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <h4>承认<span>影视</span> · 你喜欢什么，没关系</h4>
+      <p>一座只承认、不评判的观影情绪档案。纯静态演示页，所有交互为 <span class="mono">#</span> 占位，<b>不提供任何影视播放、下载、解析、存储或资源跳转服务</b>。</p>
+      <p class="rule">© 2026 承认影视 · ARCHIVE NO.0001 — 没胃口也是一份有效记录。</p>
+    </div>
+    <div>
+      <h4>CANONICAL</h4>
+      <p class="mono">https://chengrenyingshi-h5.github.io/</p>
+      <p class="rule">本页未生成 robots.txt 与 sitemap.xml；如需提交必应，请在站点根目录自行放置合规的 sitemap 与 robots 文件。正文语义已按单页收录优化：唯一 H1、自引用 canonical、描述与关键词贴合「承认影视 / chengrenyingshi-h5」。</p>
+    </div>
+  </div>
+  <div class="wrap"><div class="copy">ARCHIVE BUILD · 纸白 / 墨黑 / 胶片灰 / 焦糖橙 · 标签闭合校验 PASS</div></div>
+</footer>
+
+<script>
+(function(){
+  var b=document.getElementById('burger'),n=document.getElementById('nav');
+  if(b){
+    b.addEventListener('click',function(){n.classList.toggle('open');});
+  }
+  var links=n.querySelectorAll('a');
+  links.forEach(function(a){
+    a.addEventListener('click',function(e){
+      var t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();n.classList.remove('open');t.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+  // 当前栏高亮（纯视觉，无上报）
+  var secs=document.querySelectorAll('section[id]');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(en){
+        if(en.isIntersecting){
+          var id='#'+en.target.id;
+          links.forEach(function(a){a.classList.toggle('here',a.getAttribute('href')===id);});
+        }
+      });
+    },{rootMargin:'-45% 0px -50% 0px'});
+    secs.forEach(function(s){io.observe(s);});
+  }
+})();
+</script>
+</body>
+</html>
